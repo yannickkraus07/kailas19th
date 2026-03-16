@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday ❤️</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #ffd6e7, #ffeccf);
+      color: #3a2a2a;
+      overflow-x: hidden;
+    }
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+    .card {
+      width: min(720px, 92vw);
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 32px 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      margin: 0 0 12px;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .button-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #ff6fa5;
+      color: white;
+      box-shadow: 0 8px 20px rgba(255,111,165,0.35);
+    }
+    button.secondary {
+      background: white;
+      color: #ff4d8d;
+    }
+    .hidden-message, .memory-box {
+      display: none;
+      margin-top: 22px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      background: rgba(255,255,255,0.8);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .memory {
+      padding: 16px;
+      border-radius: 18px;
+      background: #fff;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    }
+    .footer {
+      margin-top: 24px;
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      animation: floatUp 4s linear forwards;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-180px) scale(1.8); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Happy Birthday, [Her Name] ❤️</h1>
+      <div class="subtitle">
+        Today is all about you. I made this little website just to remind you how special you are to me.
+      </div>
+
+      <div class="button-row">
+        <button onclick="showLetter()">Open My Letter</button>
+        <button class="secondary" onclick="releaseHearts()">Tap for a Surprise</button>
+      </div>
+
+      <div class="hidden-message" id="letter">
+        Dear [Her Name],<br><br>
+        Happy birthday my love. Thank you for being such an amazing part of my life. You make my days brighter, my laughs louder, and everything feel better just by being you.<br><br>
+        I hope this year brings you so much happiness, success, and beautiful memories — and I hope I get to be there for all of it.<br><br>
+        Love,<br>
+        [Your Name]
+      </div>
+
+      <div class="memory-grid">
+        <div class="memory" onclick="showMemory('The first thing I noticed about you was [write this].')">Our Beginning</div>
+        <div class="memory" onclick="showMemory('My favorite memory with you is [write this].')">Favorite Memory</div>
+        <div class="memory" onclick="showMemory('Three things I love about you: [1], [2], [3].')">3 Things I Love</div>
+        <div class="memory" onclick="showMemory('What I want for us this year: [write this].')">This Year With You</div>
+      </div>
+
+      <div class="memory-box" id="memoryBox"></div>
+
+      <div class="footer">Made with love for your birthday ✨</div>
+    </div>
+  </div>
+
+  <script>
+    function showLetter() {
+      document.getElementById('letter').style.display = 'block';
+    }
+
+    function showMemory(text) {
+      const box = document.getElementById('memoryBox');
+      box.style.display = 'block';
+      box.innerHTML = text;
+    }
+
+    function releaseHearts() {
+      for (let i = 0; i < 18; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = 70 + Math.random() * 20 + 'vh';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+    }
+  </script>
+</body>
+</html>
