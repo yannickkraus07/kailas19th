@@ -221,87 +221,227 @@
       line-height: 1.8;
     }
 
-    .envelope-wrap {
-      display: none;
-      margin-top: 24px;
-      justify-content: center;
-      perspective: 1000px;
-    }
+  .envelope-wrap {
+  display: none;
+  margin-top: 28px;
+  justify-content: center;
+  align-items: center;
+}
 
-    .envelope {
-      position: relative;
-      width: min(520px, 92vw);
-      height: 320px;
-      cursor: pointer;
-      user-select: none;
-    }
+.envelope-shell {
+  width: min(720px, 94vw);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 0 8px;
+}
 
-    .envelope-back,
-    .envelope-front,
-    .envelope-flap,
-    .letter-paper {
-      position: absolute;
-      inset: 0;
-      border-radius: 22px;
-    }
+.envelope {
+  position: relative;
+  width: min(560px, 92vw);
+  height: 360px;
+  cursor: pointer;
+  perspective: 1600px;
+}
 
-    .envelope-back {
-      background: linear-gradient(180deg, #ffd8e7, #ffc1d8);
-      box-shadow: 0 18px 45px rgba(80, 31, 49, 0.14);
-      overflow: hidden;
-    }
+.envelope-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  transform: translateX(-50%);
+  width: 82%;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(90, 36, 60, 0.16);
+  filter: blur(14px);
+  z-index: 0;
+}
 
-    .envelope-front {
-      background: linear-gradient(180deg, #ffbfd5, #ffaecb);
-      clip-path: polygon(0 100%, 0 38%, 50% 68%, 100% 38%, 100% 100%);
-      z-index: 3;
-      border-radius: 0 0 22px 22px;
-    }
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
 
-    .envelope-flap {
-      background: linear-gradient(180deg, #ffd5e4, #ffbdd5);
-      clip-path: polygon(0 0, 50% 62%, 100% 0);
-      transform-origin: top;
-      transition: transform 0.8s ease;
-      z-index: 4;
-      border-radius: 22px 22px 0 0;
-    }
+.envelope-back,
+.envelope-left,
+.envelope-right,
+.envelope-bottom,
+.envelope-flap,
+.letter-paper {
+  position: absolute;
+}
 
-    .letter-paper {
-      inset: 18px 22px 22px 22px;
-      background: linear-gradient(180deg, #fffdfd, #fff2f7);
-      padding: 22px 20px;
-      text-align: left;
-      line-height: 1.85;
-      border-radius: 18px;
-      box-shadow: 0 12px 25px rgba(80, 31, 49, 0.08);
-      transform: translateY(88px);
-      transition: transform 0.9s ease;
-      z-index: 2;
-      overflow: auto;
-      font-size: 0.98rem;
-    }
+.envelope-back {
+  inset: 0;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, #ffe3ee 0%, #ffd2e4 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 18px 40px rgba(91, 41, 62, 0.14);
+  overflow: hidden;
+}
 
-    .envelope.open .envelope-flap {
-      transform: rotateX(180deg);
-    }
+.envelope-back::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.35), transparent 35%),
+    linear-gradient(315deg, rgba(255,255,255,0.18), transparent 40%);
+  pointer-events: none;
+}
 
-    .envelope.open .letter-paper {
-      transform: translateY(-48px);
-    }
+.letter-paper {
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%) translateY(118px);
+  width: 84%;
+  height: 285px;
+  background:
+    linear-gradient(180deg, #fffefe 0%, #fff7fb 100%);
+  border-radius: 18px;
+  box-shadow:
+    0 14px 28px rgba(76, 28, 51, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.85);
+  z-index: 2;
+  transition: transform 0.9s cubic-bezier(.2,.8,.2,1);
+  overflow: hidden;
+  border: 1px solid rgba(240, 210, 222, 0.9);
+}
 
-    .envelope-hint {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+.letter-paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, transparent 0 27px, rgba(255, 196, 220, 0.18) 27px 28px);
+  background-size: 100% 28px;
+  pointer-events: none;
+}
 
-    .memory-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
+.letter-inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow-y: auto;
+  padding: 26px 24px 24px;
+  text-align: left;
+  line-height: 1.9;
+  font-size: 0.98rem;
+  color: #5a4048;
+}
+
+.letter-inner p {
+  margin: 0 0 14px;
+}
+
+.letter-signoff {
+  margin-top: 20px;
+}
+
+.envelope-left {
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  height: 72%;
+  background: linear-gradient(135deg, #ffc0d7, #ffb2cd);
+  clip-path: polygon(0 100%, 0 0, 100% 100%);
+  z-index: 4;
+  border-bottom-left-radius: 22px;
+}
+
+.envelope-right {
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  height: 72%;
+  background: linear-gradient(225deg, #ffc0d7, #ffb2cd);
+  clip-path: polygon(100% 100%, 0 100%, 100% 0);
+  z-index: 4;
+  border-bottom-right-radius: 22px;
+}
+
+.envelope-bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 58%;
+  background: linear-gradient(180deg, #ffb8d2 0%, #ffa8c7 100%);
+  clip-path: polygon(0 100%, 50% 34%, 100% 100%);
+  z-index: 5;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+}
+
+.envelope-flap {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 58%;
+  background: linear-gradient(180deg, #ffe0ec 0%, #ffc8dd 100%);
+  clip-path: polygon(0 0, 50% 78%, 100% 0);
+  transform-origin: top center;
+  transition: transform 0.85s cubic-bezier(.2,.8,.2,1);
+  z-index: 6;
+  filter: drop-shadow(0 4px 8px rgba(102, 38, 65, 0.08));
+}
+
+.flap-seal {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ff6a9d 0%, #f74a84 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  box-shadow:
+    0 8px 18px rgba(247, 74, 132, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+}
+
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+}
+
+.envelope.open .letter-paper {
+  transform: translateX(-50%) translateY(-54px);
+}
+
+.envelope-hint {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+  .envelope {
+    height: 320px;
+  }
+
+  .letter-paper {
+    height: 250px;
+    width: 88%;
+  }
+
+  .letter-inner {
+    padding: 20px 18px 20px;
+    font-size: 0.92rem;
+  }
+
+  .flap-seal {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+}
 
     .memory {
       background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,247,251,0.96));
@@ -579,25 +719,67 @@
           <a class="jump-link secondary-btn" href="#timeline">Go to memories</a>
         </div>
 
-        <div class="envelope-wrap" id="envelopeWrap">
-          <div class="envelope" id="envelope" onclick="toggleEnvelope()">
-            <div class="envelope-back"></div>
-            <div class="letter-paper lobster-two-regular">
-              Dear Kaila, <br><br>
-              I want to begin by wishing you an amazing 19th Birthday. It’s insane to think that you are in your last teenage year. I don’t know about you, but I feel so old. Time is going by so quickly, I just need time to reflect. Enough about that, this day is all about you. As much trouble as we have been having, I just want to tell you that you’re doing amazing, and I’m so proud of you. No matter what you do, you will end up being successful. You may not know entirely what you want to do in the future, yet you have changed paths so much and have such a broad set of skills that you can literally do anything you want. And I want you to know that everything will always be okay; there are so many people who love you and care about you who are willing to help you with any situation. I don’t want you to feel alone ever, even when we are 9000 kilometers apart. <br><br>
-              Happy birthday again gorgeous.<br><br>
-              I feel very lucky to have you and am always grateful for the experiences we have shared over the years. I hope this year brings you everything you wish for and a lot more happiness, a lot less stress/anxiety, and of course, a lot of smartness to do well on all of your exams. Most importantly, I want you to know that I’m always here for you, annoyed, frustrated, or happy, I will be here. <br><br>
-              Thank you for being you, hacking your way into my life, and being such a special part of me. Happy Birthday again, gorgeous.<br><br>
+<div class="envelope-wrap" id="envelopeWrap">
+  <div class="envelope-shell">
+    <div class="envelope" id="envelope" onclick="toggleEnvelope()">
+      <div class="envelope-shadow"></div>
+
+      <div class="envelope-body">
+        <div class="letter-paper lobster-two-regular">
+          <div class="letter-inner">
+            <p>Dear Kaila,</p>
+
+            <p>
+              I want to begin by wishing you an amazing 19th Birthday. It’s insane to think that you are in your last teenage year.
+              I don’t know about you, but I feel so old. Time is going by so quickly, I just need time to reflect.
+              Enough about that, this day is all about you.
+            </p>
+
+            <p>
+              As much trouble as we have been having, I just want to tell you that you’re doing amazing, and I’m so proud of you.
+              No matter what you do, you will end up being successful. You may not know entirely what you want to do in the future,
+              yet you have changed paths so much and have such a broad set of skills that you can literally do anything you want.
+            </p>
+
+            <p>
+              And I want you to know that everything will always be okay; there are so many people who love you and care about you
+              who are willing to help you with any situation. I don’t want you to feel alone ever, even when we are 9000 kilometers apart.
+              I feel very lucky to have you and am always grateful for the experiences we have shared over the years.
+              I hope this year brings you everything you wish for and a lot more happiness, a lot less stress/anxiety,
+              and of course, a lot of smartness to do well on all of your exams.
+            </p>
+
+            <p>
+              Most importantly, I want you to know that I’m always here for you, annoyed, frustrated, or happy, I will be here.
+            </p>
+
+            <p>
+              Thank you for being you, hacking your way into my life, and being such a special part of me.
+              Happy Birthday again, gorgeous.
+            </p>
+
+            <p class="letter-signoff">
               Your favorite boyfriend,<br>
               Yannick
-            </div>
-            <div class="envelope-front"></div>
-            <div class="envelope-flap"></div>
+            </p>
           </div>
         </div>
-        <div class="envelope-hint" id="envelopeHint" style="display:none;">Tap the envelope to open and close your letter 💗</div>
+
+        <div class="envelope-back"></div>
+        <div class="envelope-left"></div>
+        <div class="envelope-right"></div>
+        <div class="envelope-bottom"></div>
+        <div class="envelope-flap">
+          <div class="flap-seal">💗</div>
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
+</div>
+
+<div class="envelope-hint" id="envelopeHint" style="display:none;">
+  Tap the envelope to open and close your letter 💌
+</div>
 
     <main class="sections">
       <section class="section-card">
@@ -606,11 +788,11 @@
           Tap each card for something I wanted to tell you.
         </p>
         <div class="memory-grid">
-          <div class="memory" onclick="showMemory('My favorite memory this year is [replace this with your real memory].')">My favorite memory this year</div>
-          <div class="memory" onclick="showMemory('5 things I love about you so you do not have to ask me every time before we go to sleep: [1], [2], [3], [4], and [5].')">5 things I love about you<br>(so you do not have to ask me every time before we go to sleep)</div>
-          <div class="memory" onclick="showMemory('Something I will always appreciate about you is [replace this].')">What I appreciate most</div>
-          <div class="memory" onclick="showMemory('One place I really want to go with you is [replace this].')">Where I want us to go</div>
-          <div class="memory" onclick="showMemory('What I want for us this year is [replace this].')">This year with you</div>
+          <div class="memory" onclick="showMemory('Theres way too many to choose from as you will see below but if I had to pick one moment it would be spending the time on the beaches of Portugal on our own as if we were adults. It felt so real and I felt so old and so connected. I miss it so much and we were so holy. The food was amazing and we ran away together. As bad as we thought it was not being in the apartment in the beginning, reflecting now it was some of the best time ive had even just being on the island.')">My favorite memory this year</div>
+          <div class="memory" onclick="showMemory('5 things I love about you so you do not have to ask me every time before we go to sleep: [1], Your gorgeous face. Just immaculate very gorgeous with all the features from soft big juicy lips to pretty eyes complemented with long lashes and perfectly solid, gelled-up eyebrows. I love it sm [2],I just have to say it but that body tea fr. From the thicc thighs that I love so much, you know youre very athletic and keeping fit always.  [3], Moving on from the physical attraction im going to say your empathy. Although it is a bit extreme, it is super sweet how deeply you care for others and animals etc, just making sure I make it clear this time that I dont hate or dislike any of that before any further accusations are made :) [4], Then we have your attitude and mindset. I know you frequently feel that the world is against you but you are so resilient and always keep working hard. I really look up to that and am proud of you for being strong enough to push through all of the challenges you have faced.  and [5] Lastly I just love the way you love me. Although I feel disconnected and we are figuring out our ways of loving, when we are together and youre just touching me and showing affection, its a feeling im not able to describe.')">5 things I love about you<br>(so you do not have to ask me every time before we go to sleep)</div>
+          <div class="memory" onclick="showMemory('Something I will always appreciate about you is your sensitivity. As annoying as it can be at times i love it and i love you for who you are. Its cute to see you care so deeply for such little things. Sometimes I wonder whats going on in your head but its cute.')">What I appreciate most</div>
+          <div class="memory" onclick="showMemory('I want to travel with you somewhere sometime this summer or something. When we have time I want to travel Europe, go on a trip together, something we can afford but also have a lot of fun on.')">Where I want us to go</div>
+          <div class="memory" onclick="showMemory('What I want for us this year is to work on this. As much as I am trying I am losing hope because ever since the first few weeks of long distance, we have tried to improve our way of connecting and we are both just occupied. I often dont feel prioritized and thus treat you the same way. Its all very hard to describe but I hope that we are able to fix it before its too late.')">This year with you</div>
         </div>
         <div class="memory-box" id="memoryBox"></div>
       </section>
@@ -625,48 +807,47 @@
           <div class="timeline-rail" id="timelineRail">
             <button class="timeline-node" onclick="showTimelineMemory(0)">
               <strong>Memory 1</strong>
-              <span>Add date or short label</span>
+              <span>17/03/2025</span>
             </button>
             <button class="timeline-node" onclick="showTimelineMemory(1)">
               <strong>Memory 2</strong>
-              <span>Add date or short label</span>
+              <span>06/04/2025</span>
             </button>
             <button class="timeline-node" onclick="showTimelineMemory(2)">
               <strong>Memory 3</strong>
-              <span>Add date or short label</span>
+              <span>03/05/2025</span>
             </button>
             <button class="timeline-node" onclick="showTimelineMemory(3)">
               <strong>Memory 4</strong>
-              <span>Add date or short label</span>
+              <span>25/05/2025</span>
             </button>
             <button class="timeline-node" onclick="showTimelineMemory(4)">
               <strong>Memory 5</strong>
-              <span>Add date or short label</span>
+              <span>14/06/2025</span>
             </button>
             <button class="timeline-node" onclick="showTimelineMemory(5)">
               <strong>Memory 6</strong>
-              <span>Add date or short label</span>
+              <span>21/06/2025</span>
             </button>
             <button class="timeline-node" onclick="showTimelineMemory(6)">
               <strong>Memory 7</strong>
-              <span>Add date or short label</span>
+              <span>23/07/2025</span>
             </button>
             <button class="timeline-node" onclick="showTimelineMemory(7)">
               <strong>Memory 8</strong>
-              <span>Add date or short label</span>
+              <span>23/10/2025</span>
             </button>
             <button class="timeline-node" onclick="showTimelineMemory(8)">
               <strong>Memory 9</strong>
-              <span>Add date or short label</span>
+              <span>Nov-Dec 2025</span>
             </button>
             <button class="timeline-node" onclick="showTimelineMemory(9)">
               <strong>Memory 10</strong>
-              <span>Add date or short label</span>
+              <span>20/01/2026</span>
             </button>
           </div>
 
           <div class="timeline-display" id="timelineDisplay">
-            <div class="timeline-image" id="timelineImage">Add your first image here later</div>
             <div class="timeline-meta">
               <div class="timeline-kicker" id="timelineKicker">Click a memory</div>
               <h3 class="timeline-title" id="timelineTitle">The timeline starts here</h3>
@@ -714,7 +895,7 @@
       {
         kicker: 'Memory 3',
         title: 'Too much Nobu',
-        note: 'One too many business lunches at Nobu, Zuma, every other fancy restauarant that satisfies my fresh 18 YO gf.',
+        note: 'One too many business lunches at Nobu, Zuma, every other fancy restauarant that satisfies my fresh 18 YO gf. This was a small celebration after your successful surgery. My goodness what the hell was that. You were dying in my car while I was trying to rush you to hospital?? That all cant have been real. Straight out of a movie.. literally.',
         image: 'IMG_3558.jpeg',
         placeholder: 'Add image for memory 3'
       },
@@ -823,13 +1004,13 @@
       display.style.display = 'block';
 
       if (number === 1) {
-        display.innerHTML = 'Gift 1 can reveal a sweet message, a date idea, or a reason why I wanted to celebrate you today.';
+        display.innerHTML = 'Watch your back today ;)';
       }
       if (number === 2) {
-        display.innerHTML = 'Gift 2 can reveal a surprise plan, a hidden note, or even a little inside joke only we would understand.';
+        display.innerHTML = 'Essentially, I want to take you to Sylt this year. If my family books something and the plan goes well I want to try and take you.';
       }
       if (number === 3) {
-        display.innerHTML = 'Gift 3 can reveal the final surprise: maybe your actual present, a countdown, or a message telling you where to find it.';
+        display.innerHTML = '';
       }
 
       display.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
